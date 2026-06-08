@@ -34,15 +34,17 @@ VALIDATE $? "Installing nginx"
 systemctl enable nginx
 VALIDATE $? "Enabling nginx"
 
+sudo rm -f /etc/nginx/default.d/expense.conf
+VALIDATE $? "Removing the default nginx configuration file"
 systemctl start nginx
 VALIDATE $? "Starting nginx"
 
 rm -rf /usr/share/nginx/html/*
-VaLIDATE $? "Cleaning the default nginx html directory"
+VALIDATE $? "Cleaning the default nginx html directory"
 
 cd /usr/share/nginx/html
 unzip /tmp/frontend.zip
-VaLIDATE $? "Unzip the frontend code in nginx html directory"
+VALIDATE $? "Unzip the frontend code in nginx html directory"
 
 cp /home/ec2-user/expense_project/expense.conf /etc/nginx/conf.d/expense.conf
 VALIDATE $? "Copying the nginx configuration file"
