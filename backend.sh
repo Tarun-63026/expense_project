@@ -59,7 +59,7 @@ unzip /tmp/backend.zip
 VALIDATE $? "Unzip the code in backend.zip file"
 
 npm install
-VALIDATE $? "Install the mysql dependices"
+VALIDATE $? "Install the nodejs dependices"
 
 
 
