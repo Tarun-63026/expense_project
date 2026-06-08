@@ -18,7 +18,7 @@ VALIDATE () {
     if [ $1 -ne 0 ]; then
        echo -e " $2 $R failure.. $N"
     else
-       echo -e " $2 $G successfully.. $N"
+       echo -e " $2 $G success.. $N"
     fi
 }
 
@@ -30,7 +30,7 @@ else
 fi
 
 dnf install mysql-server -y &>>LOG_FILE
-VALIDATE $? "Mysql instalation was done"
+VALIDATE $? "Mysql instalation status..."
 
 systemctl enable mysqld &>>LOG_FILE
 VALIDATE $? "Mysql was enabled"
@@ -38,14 +38,11 @@ VALIDATE $? "Mysql was enabled"
 systemctl start mysqld &>>LOG_FILE
 VALIDATE $? "Mysql was started"
 
-# mysql_secure_installation --set-root-pass ExpenseApp@1
-# VALIDATE $? "Password enabled"
-
 mysql -h 172.31.34.169 -uroot -p{DB_password} 'show databases' &>>LOG_FILE
 if [ $? -ne 0 ]; then
    mysql_secure_installation --set-root-pass {DB_password}
-   VALIDATE $? "Your DataBase password was successfully done"
+   VALIDATE $? "Your DataBase password setup..."
 else
-   echo -e "$G You are already setup the Database password... $Y Skipping $N"
+   echo -e "You are already setup the Database password... $Y Skipping $N"
 fi
 
