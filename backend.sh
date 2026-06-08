@@ -46,20 +46,20 @@ else
    echo -e "User expense was already added... $Y Skipping $N"
 fi
 
-mkdir -p /app
+mkdir -p /app &>>LOG_FILE
 VALIDATE $? "Creating app directory"
 
-curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip
+curl -o /tmp/backend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-backend-v2.zip &>>LOG_FILE
 VALIDATE $? "Downloading the code"
 
-cd /app
+cd /app &>>LOG_FILE
 rm -rf /app/*
 VALIDATE $? "Change directory to app"
 
-unzip /tmp/backend.zip
+unzip /tmp/backend.zip &>>LOG_FILE
 VALIDATE $? "Unzip the code in backend.zip file"
 
-npm install
+npm install &>>LOG_FILE
 VALIDATE $? "Install the nodejs dependices"
 
 cp /home/ec2-user/expense_project/backend.service /etc/sysytemd/system/backend.service &>>LOG_FILE
@@ -74,10 +74,10 @@ VALIDATE $? "Starting the backend sevrice"
 systemctl enable backend
 VALIDATE $? "Enabling the backend service"
 
-dnf install mysql -y
+dnf install mysql -y &>>LOG_FILE
 VALIDATE $? "Installing the mysql sever"
 
-mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -p{DB_password} < /app/schema/backend.sql
+mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -p{DB_password} < /app/schema/backend.sql &>>LOG_FILE
 VALIDATE $? "Loading the schema"
 
 systemctl restart backend
