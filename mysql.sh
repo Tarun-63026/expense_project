@@ -44,7 +44,7 @@ VALIDATE $? "Mysql was started"
 mysql -h 172.31.34.169 -uroot -p{DB_password} 'show databases' &>>LOG_FILE
 if [ $? -ne 0 ]; then
    mysql_secure_installation --set-root-pass {DB_password}
-   VALIDATE $? -e " $G Your DataBase password was successfully done"
+   VALIDATE $? "Your DataBase password was successfully done"
 else
    echo -e "$G You are already setup the Database password... $Y Skipping $N"
 fi
