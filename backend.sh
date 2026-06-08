@@ -61,7 +61,7 @@ VALIDATE $? "Unzip the code in backend.zip file"
 npm install &>>LOG_FILE
 VALIDATE $? "Install the nodejs dependices"
 
-cp /home/ec2-user/expense_project/backend.service /etc/sysytemd/system/backend.service &>>LOG_FILE
+cp /home/ec2-user/expense_project/backend.service /etc/systemd/system/backend.service &>>$LOG_FILE
 VALIDATE $? "Copied backend code"
 
 systemctl daemon-reload
