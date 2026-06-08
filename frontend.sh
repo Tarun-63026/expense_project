@@ -34,10 +34,13 @@ VALIDATE $? "Installing of nginx"
 systemctl enable nginx &>>$LOG_FILE
 VALIDATE $? "Enabling of nginx"
 
-rm -f /etc/nginx/default.d/expense.conf &>>$LOG_FILE
-VALIDATE $? "Removing the default config file"
 systemctl start nginx &>>$LOG_FILE
 VALIDATE $? "Starting of nginx"
+
+if [ $? -ne 0 ]; then
+    nginx -t
+    systemctl status nginx
+fi
 
 rm -rf /usr/share/nginx/html/* &>>$LOG_FILE
 VALIDATE $? "Removing of default/previous content"
@@ -54,5 +57,7 @@ VALIDATE $? "Unzip the content"
 cp /home/ec2-user/expense_project/expense.conf /etc/nginx/default.d/expense.conf &>>$LOG_FILE
 VALIDATE $? "Copying the config content to original location"
 
-systemctl restart nginx &>>$LOG_FILE
+nginx -t
+systemctl status nginx -l &>>$LOG_FILE
+VALIDATE $? "Testing the nginx configuration"
 VALIDATE $? "Restarting the nginx"
