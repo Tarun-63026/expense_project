@@ -39,7 +39,7 @@ dnf install nodejs -y &>>LOG_FILE
 VALIDATE $? "Instalation of new version"
 
 id expense &>>LOG_FILE
-if [ $? -ne 0]; then
+if [ $? -ne 0 ]; then
    useradd expense 
    VALIDATE $? "Expense user adding"
 else
