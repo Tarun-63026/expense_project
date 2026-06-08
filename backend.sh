@@ -62,6 +62,36 @@ VALIDATE $? "Unzip the code in backend.zip file"
 npm install
 VALIDATE $? "Install the nodejs dependices"
 
+cp /home/ec2-user/expense_project/backend.service /etc/sysytemd/system/backend.service &>>LOG_FILE
+VALIDATE $? "Copied backend code"
+
+systemctl daemon-reload
+VALIDATE $? "Reload the system"
+
+systemctl start backend
+VALIDATE $? "Starting the backend sevrice"
+
+systemctl enable backend
+VALIDATE $? "Enabling the backend service"
+
+dnf install mysql -y
+VALIDATE $? "Installing the mysql sever"
+
+mysql -h <MYSQL-SERVER-IPADDRESS> -uroot -p{DB_password} < /app/schema/backend.sql
+VALIDATE $? "Loading the schema"
+
+systemctl restart backend
+VALIDATE $? "Restaring the backend service"
+
+
+
+
+
+
+
+
+
+
 
 
 
