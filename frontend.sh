@@ -34,6 +34,8 @@ VALIDATE $? "Installing of nginx"
 systemctl enable nginx &>>$LOG_FILE
 VALIDATE $? "Enabling of nginx"
 
+rm -f /etc/nginx/default.d/expense.conf &>>$LOG_FILE
+VALIDATE $? "Removing the default config file"
 systemctl start nginx &>>$LOG_FILE
 VALIDATE $? "Starting of nginx"
 
