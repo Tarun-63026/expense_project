@@ -34,7 +34,7 @@ VALIDATE $? "Installing nginx"
 systemctl enable nginx
 VALIDATE $? "Enabling nginx"
 
-sudo rm -f /etc/nginx/default.d/expense.conf
+rm -f /etc/nginx/default.d/expense.conf
 VALIDATE $? "Removing the default nginx configuration file"
 systemctl start nginx
 VALIDATE $? "Starting nginx"
