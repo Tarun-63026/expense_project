@@ -31,15 +31,11 @@ fi
 dnf install nginx -y &>>$LOG_FILE
 VALIDATE $? "Installing of nginx"
 
-systemctl enable nginx &>>$LOG_FILE
+sudo systemctl enable nginx &>>$LOG_FILE
 VALIDATE $? "Enabling of nginx"
 
-systemctl start nginx &>>$LOG_FILE
+sudo systemctl start nginx &>>$LOG_FILE
 VALIDATE $? "Starting of nginx"
-if [ $? -ne 0 ]; then
-    nginx -t
-    systemctl status nginx
-fi
 
 rm -rf /usr/share/nginx/html/* &>>$LOG_FILE
 VALIDATE $? "Removing of default/previous content"
@@ -56,6 +52,5 @@ VALIDATE $? "Unzip the content"
 cp /home/ec2-user/expense_project/expense.conf /etc/nginx/default.d/expense.conf &>>$LOG_FILE
 VALIDATE $? "Copying the config content to original location"
 
-nginx -t
-systemctl status nginx -l &>>$LOG_FILE
+sudo systemctl status nginx &>>$LOG_FILE
 VALIDATE $? "Restarting the nginx"
