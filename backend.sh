@@ -40,6 +40,7 @@ VALIDATE $? "Instalation of new version"
 
 if [ $? -ne 0]; then
    useradd expense
+   VALIDATE $? "Expense user adding"
 else
    echo -e "User expense was already added... $Y Skipping $N"
 fi
