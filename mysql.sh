@@ -5,6 +5,9 @@ TIME_STAMP=$(date +F%-H%-M%-S%)
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE=/tmp/$SCRIPT_NAME-$TIME_STAMP.log
 
+echo "Please end your Database password: "
+read -s DB_password
+
 
 R="\e[31m"
 G="\e[32m"
@@ -35,5 +38,14 @@ VALIDATE $? "Mysql was enabled"
 systemctl start mysqld &>>LOG_FILE
 VALIDATE $? "Mysql was started"
 
-mysql_secure_installation --set-root-pass ExpenseApp@1
-VALIDATE $? "Password enabled"
+# mysql_secure_installation --set-root-pass ExpenseApp@1
+# VALIDATE $? "Password enabled"
+
+mysql -h 172.31.34.169 -uroot -p{DB_password} 'show databases' &>>LOG_FILE
+if [ $? -ne 0 ]; then
+   mysql_secure_installation --set-root-pass {DB_password}
+   Validate $? -e " $G Your DataBase password was successfully done"
+else
+   echo -e "$G You are already setup the Database password... $Y Skipping $N"
+fi
+
