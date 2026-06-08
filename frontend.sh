@@ -50,7 +50,7 @@ unzip /tmp/frontend.zip
 VALIDATE $? "Unzip the content in temporary folder"
 
 cp /home/ec2-user/expense_project/expense.conf  /etc/nginx/default.d/expense.conf
-VALDATE $? "Coping the content to orignial location"
+VALIDATE $? "Coping the content to orignial location"
 
 systemctl restart nginx
 VALIDATE $? "Resatrting the nginx"
