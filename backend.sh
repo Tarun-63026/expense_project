@@ -35,11 +35,12 @@ VALIDATE $? "Disabling the old nodejs version"
 dnf module enable nodejs:20 -y &>>LOG_FILE
 VALIDATE $? "Enabling the new nodejs version"
 
-dnf install nodejs -y
+dnf install nodejs -y &>>LOG_FILE
 VALIDATE $? "Instalation of new version"
 
+id expense &>>LOG_FILE
 if [ $? -ne 0]; then
-   useradd expense
+   useradd expense 
    VALIDATE $? "Expense user adding"
 else
    echo -e "User expense was already added... $Y Skipping $N"
