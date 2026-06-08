@@ -36,7 +36,6 @@ VALIDATE $? "Enabling of nginx"
 
 systemctl start nginx &>>$LOG_FILE
 VALIDATE $? "Starting of nginx"
-
 if [ $? -ne 0 ]; then
     nginx -t
     systemctl status nginx
@@ -59,5 +58,4 @@ VALIDATE $? "Copying the config content to original location"
 
 nginx -t
 systemctl status nginx -l &>>$LOG_FILE
-VALIDATE $? "Testing the nginx configuration"
 VALIDATE $? "Restarting the nginx"
