@@ -1,12 +1,9 @@
 #!/bin/bash
 
 USERID=$(id -u)
-TIME_STAMP=$(date +%F-%H-%M-%S)
+TIME_STAMP=$(date +F%-H%-M%-S%)
 SCRIPT_NAME=$(echo $0 | cut -d "." -f1)
 LOG_FILE=/tmp/$SCRIPT_NAME-$TIME_STAMP.log
-
-# echo "Please enter your Database password: "
-# read -s DB_password
 
 R="\e[31m"
 G="\e[32m"
@@ -28,29 +25,30 @@ else
    echo "You are the super user, please proceed"
 fi
 
-dnf install nginx -y &>>$LOG_FILE
-VALIDATE $? "Installing of nginx"
+dnf install nginx -y &>>LOG_FILE
+VALIDATE $? "Nginx installation status..."
 
-systemctl enable nginx &>>$LOG_FILE
-VALIDATE $? "Enabling of nginx"
+systemctl enable nginx &>>LOG_FILE
+VALIDATE $? "Nginx was enabled"
 
-systemctl start nginx &>>$LOG_FILE
-VALIDATE $? "Starting of nginx"
+systemctl start nginx &>>LOG_FILE
+VALIDATE $? "Nginx was started"
 
-rm -rf /usr/share/nginx/html/* &>>$LOG_FILE
-VALIDATE $? "Removing of default/previous content"
+rm -rf /usr/share/nginx/html/*
+VALIDATE $? "Nginx default page was removed"
 
-curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip &>>$LOG_FILE
-VALIDATE $? "Downloading the frontend content"
+curl -o /tmp/frontend.zip https://expense-builds.s3.us-east-1.amazonaws.com/expense-frontend-v2.zip
+VALIDATE $? "Frontend zip file download"
 
-cd /usr/share/nginx/html &>>$LOG_FILE
-VALIDATE $? "Change directory to Nginx html folder"
+cd /usr/share/nginx/html
+unzip /tmp/frontend.zip &>>LOG_FILE
+VALIDATE $? "Frontend zip file extraction"
 
-unzip /tmp/frontend.zip &>>$LOG_FILE
-VALIDATE $? "Unzip the content"
+cp /home/ec2-user/expense_project/expense.conf /etc/nginx/conf.d/expense.conf
+VALIDATE $? "Nginx configuration file copy"
 
-cp /home/ec2-user/expense_project/expense.conf /etc/nginx/default.d/expense.conf &>>$LOG_FILE
-VALIDATE $? "Copying the config content to original location"
+systemctl restart nginx &>>LOG_FILE
+VALIDATE $? "Nginx was restarted"
 
-systemctl restart nginx &>>$LOG_FILE
-VALIDATE $? "Restarting the nginx"
+
+
