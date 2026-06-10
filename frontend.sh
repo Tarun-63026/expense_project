@@ -40,7 +40,7 @@ VALIDATE $? "Cleaning the default nginx html directory"
 curl -o /tmp/expense.conf https://expense-builds.s3.us-east-1.amazonaws.com/expense.conf &>>LOG_FILE
 VALIDATE $? "Downloading the nginx configuration file"
 
-cp /home/ec2-user/expense.conf  /etc/nginx/default.d/expense.conf &>>LOG_FILE
+cp /home/ec2-user/expense_project/expense.conf  /etc/nginx/default.d/expense.conf &>>LOG_FILE
 VALIDATE $? "Moving the nginx configuration file to conf.d directory" 
 
 systemctl restart nginx &>>LOG_FILE
