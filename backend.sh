@@ -53,7 +53,7 @@ VALIDATE $? "Unzipping the code"
 npm install &>>LOG_FILE
 VALIDATE $? "Downloading the dependinces"
 
-cp /home/ec2-user/expense_project/backen.service /etc/systemd/system/backend.service &>>LOG_FILE
+cp /home/ec2-user/expense_project/backend.service /etc/systemd/system/backend.service &>>LOG_FILE
 VALIDATE $? "Copying the code to system"
 
 systemctl daemon-reload &>>LOG_FILE
