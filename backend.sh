@@ -35,8 +35,12 @@ VALIDATE $? "Disabling the nodejs:28"
 dnf install nodejs -y &>>LOG_FILE
 VALIDATE $? "Installing the nodejs"
 
-useradd expense &>>LOG_FILE
-VALIDATE $? "Adding the Expense user"
+if [ $? -ne 0 ]; then
+   useradd expense &>>LOG_FILE
+   echo "Creating expense user"
+else
+   echo -e "Expense User already created...$Y Skipping $N"
+fi
 
 mkdir -p /app &>>LOG_FILE
 VALIDATE $? "Creating app directory"
