@@ -38,7 +38,7 @@ VALIDATE $? "Installing the nodejs"
 id expense &>>LOG_FILE
 if [ $? -ne 0 ]; then
    useradd expense &>>LOG_FILE
-   echo "Creating expense user"
+   VALIDATE $? "Creating expense user"
 else
    echo -e "Expense User already created...$Y Skipping $N"
 fi
