@@ -23,10 +23,10 @@ if [ $USERID -ne 0 ]; then
   echo -e "$R Please swicth to the super user $N"
   exit 1
 else
- echo -e "$R You are the super user $N"
+ echo -e "$G You are the super user $N"
 fi 
 
-dnf install mysql-server &>>LOG_FILE
+dnf install mysql-server -y &>>LOG_FILE
 VALIDATE $? "Installation of mysql"
 
 systemctl enable mysqld &>>LOG_FILE
