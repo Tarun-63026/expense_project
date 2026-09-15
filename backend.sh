@@ -35,6 +35,7 @@ VALIDATE $? "Disabling the nodejs:28"
 dnf install nodejs -y &>>LOG_FILE
 VALIDATE $? "Installing the nodejs"
 
+id expense &>>LOG_FILE
 if [ $? -ne 0 ]; then
    useradd expense &>>LOG_FILE
    echo "Creating expense user"
